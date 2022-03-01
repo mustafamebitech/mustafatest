@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--        Solution distribution File
+
+            Attention!
+            This build file relies on ANT 1.6 features. Targets without a
+            description tag are not meant to be executed stand alone.
+            Please refer to the Help target for more information.
+
+            created at: 2022-03-01
+            Version:    $Revision: 1.1 $
+            Copyright:  (c) 2008, SEEBURGER AG, all rights reserved -->
+<project name="mustafatest-distribute" default="Help" basedir=".">
+	<property name="version" value="0.3"/>
+    <property name="bsh.dir" value="${basedir}/antBuild/generated/bsh"/>
+	
+    <!-- distributes the files
+         each ant-call should depend on the target initializeDistribute -->
+    <target name="distribute"
+            description="distributes the files (server version before 6.3.4)"
+            depends="copy-solution" />
+
+    <target name="distribute-zip"
+    	    description="distributes the solution zip file to the server (since 6.3.4)"
+    	    depends="copy-solution-zip" />
+    
+    <target name="copy-solution-prepare">
+        <property name="dist.base" value="${bisas_home}"/>
+    </target>
+
+    <!-- copies the artifact ${artifact.XXX} to distribution structure.
+         please use ${dist.base.xxx} variables as destination
+         this target should depend on prepareDistribute -->
+    <target name="copy-solution"
+            depends="copy-solution-prepare,
+                     prepareDistribute">
+        <unzip src="${artifact.zipFile}"
+               dest="${dist.base}"
+               overwrite="true"/>
+    </target>
+
+    <target name="copy-BSH" depends="copy-solution-prepare">
+	  <copy todir="${dist.base}/data/webdav/repository/scriptedcomponents/scripts.jar">
+		<fileset dir="${bsh.dir}" casesensitive="yes"/>
+	  </copy>
+    </target>
+
+    <target name="prepareDistribute">
+        <property name="dist.base.bin" location="${dist.base}/bin"/>
+        <property name="dist.base.conf" location="${dist.base}/conf"/>
+        <property name="dist.base.conf.pl" location="${dist.base.conf}/pl"/>
+        <property name="dist.base.data" location="${dist.base}/data"/>
+        <property name="dist.base.data.webdav" location="${dist.base.data}/webdav"/>
+        <property name="dist.base.data.webdav.repository" location="${dist.base.data.webdav}/repository"/>
+        <property name="dist.base.lib" location="${dist.base}/lib"/>
+        <property name="dist.base.lib.ext" location="${dist.base.lib}/ext"/>
+        <property name="dist.base.log" location="${dist.base}/log"/>
+        <property name="dist.base.software" location="${dist.base}/software"/>
+        <property name="dist.base.software.conf" location="${dist.base.software}/conf"/>
+        <property name="dist.base.software.db" location="${dist.base.software}/db"/>
+        <property name="dist.base.software.deploy" location="${dist.base.software}/deploy"/>
+        <property name="dist.base.software.lib" location="${dist.base.software}/lib"/>
+        <property name="dist.base.software.libraries" location="${dist.base.software}/libraries"/>
+        <property name="dist.base.software.modules" location="${dist.base.software}/modules"/>
+        <property name="dist.base.software.modules.frontend" location="${dist.base.software.modules}/frontend"/>
+        <property name="dist.base.software.modules.frontend.lib" location="${dist.base.software.modules.frontend}/lib"/>
+        <property name="dist.base.software.modules.portlets" location="${dist.base.software.modules}/portlets"/>
+        <property name="dist.base.software.pl" location="${dist.base.software}/pl"/>
+        <property name="dist.base.software.remoteservices" location="${dist.base.software}/remoteservices"/>
+        <property name="dist.base.software.resources" location="${dist.base.software}/resources"/>
+        <property name="dist.base.software.repository" location="${dist.base.software}/repository"/>
+        <property name="dist.base.software.repository.tasks" location="${dist.base.software.repository}/tasks"/>
+        <property name="dist.base.software.repository.wsdl" location="${dist.base.software.repository}/wsdl"/>
+        <property name="dist.base.software.repository.xsd" location="${dist.base.software.repository}/xsd"/>
+        <property name="dist.base.runtime" location="${dist.base}/runtime"/>
+        <property name="dist.base.runtime.ant" location="${dist.base.runtime}/ant"/>
+        <property name="dist.base.runtime.jdk" location="${dist.base.runtime}/jvm"/>
+        <property name="dist.base.runtime.jvm" location="${dist.base.runtime}/jvm"/>
+        <property name="dist.base.runtime.jboss" location="${dist.base.runtime}/jboss"/>
+
+        <!-- targets needed for Tomcat nodes -->
+        <property name="dist.base.webapps"      location="${dist.base}/webapps"/>
+        <property name="dist.base.shared.lib"   location="${dist.base}/shared/lib"/>
+    </target>
+
+    <target name="copy-solution-zip"
+    	depends="copy-solution-prepare">
+        <copy todir="${dist.base}/software/solutions" file="${artifact.zipFile}" overwrite="true"/>
+    </target>
+
+    <!-- Help task
+             Here you include brief decsription of all the usefull targets
+             that could be invoked. -->
+    <target name="Help"
+            description="displays a short list of useable targets">
+        <echo message="*****************************************************"/>
+        <echo message="*   ${ant.project.name} distribution file           *"/>
+        <echo message="*                                                   *"/>
+        <echo message="*   Available tasks:                                *"/>
+        <echo message="*    - distribute - target for distributing to BIS  *"/>
+        <echo message="*                   from within eclipse or the      *"/>
+        <echo message="*                   command line                    *"/>
+    	<echo message="*                   NOTE: Use only for BIS servers  *"/>
+        <echo message="*                         before 6.3.4!             *"/>
+        <echo message="*                                                   *"/>
+        <echo message="*    - distribute-zip - target to distribute the    *"/>
+        <echo message="*                   solution zip to BIS without     *"/>
+        <echo message="*                   unpacking it                    *"/>
+        <echo message="*                   NOTE: Use only for BIS servers  *"/>
+        <echo message="*                         since 6.3.4!              *"/>
+        <echo message="*                                                   *"/>
+        <echo message="*   NOTE: The property ${bisas_home} must be set in *"/>
+        <echo message="*    the ant runtime properties of eclipse before a *"/>
+        <echo message="*    task is executed that copies files to the      *"/>
+        <echo message="*    server.                                        *"/>
+        <echo message="*                                                   *"/>
+        <echo message="*   Remember:                                       *"/>
+        <echo message="*    Targets without a description are not meant to *"/>
+        <echo message="*    be executed stand alone!                       *"/>
+        <echo message="*****************************************************"/>
+    </target>
+</project>

@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--        Solution Build File
+
+            Attention!
+            This build file relies on ANT 1.6 features. Targets without a
+            description tag are not meant to be executed stand alone.
+            Please refer to the Help target for more information.
+
+            created at: 2022-03-01
+            Version:    $Revision: 1.1 $
+            Copyright:  (c) 2008, SEEBURGER AG, all rights reserved
+            $Id: $ -->
+<project name="mustafatest" default="Help" basedir="..">
+	<!-- version of the project -->
+	<property name="version" value="0.7" />
+	<!-- Base directories. All other should be derived from them. -->
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="build.dir" value="${basedir}/antBuild" />
+	<property name="resource.dir" value="${src.dir}/resources" />
+	<property name="artifact.target" value="${basedir}/artifacts" />
+	<!-- Standard directories derived from base dirs.
+         Set the appropriate ones according to your project.
+         Examples are for a Java project. -->
+	<property name="src.java.dir" value="${src.dir}/java" />
+	<property name="src.java_test.dir" value="${src.dir}/java_test" />
+	<property name="build.classes" value="${build.dir}/classes" />
+	<property name="build.javadoc" value="${build.dir}/javadoc" />
+	<property name="build.generated.dir" value="${build.dir}/generated" />
+	<property name="build.bpel.dir" value="${build.dir}/bpel" />
+	<!-- directory for temporary stuff -->
+	<property name="build.temp" value="${build.dir}/temp" />
+	<!-- directory for signed stuff -->
+	<property name="build.signed" value="${build.dir}/signed" />
+	<!-- here we define all artifacts that are built by this project -->
+	<basename property="project.name" file="${basedir}" />
+	<property name="artifact.zipFile" location="${artifact.target}/${project.name}.zip" />
+	<!-- Build classpath.
+         Should be comprised of all artifacts on which
+         the build of this project depends.
+         It is not advised to have in the classpath
+         other libs than the ones described as artifacts. -->
+	<path id="classpath">
+	</path>
+	<target name="prepare">
+		<tstamp>
+			<format property="TODAY" pattern="yyyy-MM-dd hh:mm:ss zzzz" locale="en" />
+		</tstamp>
+        <property name="date" value="${DSTAMP}" />
+        <property name="time" value="${TSTAMP}" />
+        <property name="timestamp" value="${date}${time}" />
+		<echo level="debug" message="Current build file:${ant.file}" />
+		<mkdir dir="${src.java.dir}" />
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.javadoc}" />
+		<delete dir="${build.temp}" failonerror="false" />
+		<delete dir="${build.signed}" failonerror="false" />
+		<delete dir="${artifact.target}" failonerror="false" />
+		<delete dir="${build.generated.dir}/bsh" failonerror="false" />
+		<delete dir="${build.bpel.dir}" failonerror="false" />
+		<mkdir dir="${build.temp}" />
+		<mkdir dir="${build.signed}" />
+		<mkdir dir="${artifact.target}" />
+		<mkdir dir="${build.generated.dir}/bsh" />
+		<mkdir dir="${build.generated.dir}/bsh/scripts" />
+		<mkdir dir="${build.bpel.dir}" />
+	</target>
+	<!-- Creates the artifacts - Please customize this target. -->
+	<target name="localBuild" depends="prepare, createBSH, TPM-creation, compile, createArtifactZip" description="execute this for local build: Beanshell-Scripts, TPM-Files and Processes are compiled and a artifact is created." />
+	<!-- Sets the directory properties, converts Beanshell-scripts and creates a process-deployment-zip -->
+	<target name="compile" description="compiles all bpd files">
+		<property name="src.schema.dir" value="${src.dir}/schemas" />
+		<property name="src.nls-icons.dir" value="${src.dir}/nls/icons" />
+		<property name="src.nls-translations.dir" value="${src.dir}/nls/translations" />
+		<property name="src.forms.dir" value="${src.dir}/forms" />
+		<property name="src.bp.dir" value="${src.dir}/bp" />
+		<property name="src.filters.dir" value="${src.dir}/filters" />
+		<!-- properties to check which src folders to include in the zip -->
+		<available property="src.forms.dir.exist" file="${src.forms.dir}" />
+		<available property="src.schema.dir.exist" file="${src.schema.dir}" />
+		<available property="src.nls-icons.dir.exist" file="${src.nls-icons.dir}" />
+		<available property="src.nls-translations.dir.exist" file="${src.dir}/nls/translations" />
+		<available property="resource.bisas.dir.exist" file="${resource.dir}/bisas" />
+		<!-- execute the ProcessDesigner Tasks -->
+		<processDesigner.CompileZip project="${project.name}" sourceDir="${src.bp.dir}" buildVersion="${build.version}"/>
+	</target>
+	<!-- Creates the Artifact Zip, call compile first -->
+	<target name="createArtifactZip" depends="deleteArtifactZip,zipTranslations, zipIcons, zipSchemas, zipForms, zipSource, zipFilters, refreshArtifactDir, createResourcesZip">
+		<zip zipfile="${artifact.zipFile}" update="true" whenempty="create">
+			<zipfileset dir="${build.generated.dir}/bsh" prefix="data/webdav/repository/scriptedcomponents/scripts.jar">
+				<include name="*.bsh" />
+			</zipfileset>
+			<zipfileset dir="${build.generated.dir}/bsh/scripts" prefix="data/webdav/repository/scripts">
+				<include name="**/*.bsh" />
+			</zipfileset>
+			<zipfileset dir="${build.bpel.dir}" prefix="data/webdav/repository/hotdeploy">
+				<include name="*.*" />
+			</zipfileset>
+			<zipfileset dir="${artifact.target}" prefix="software/lib">
+				<include name="*.jar" />
+			</zipfileset>
+		</zip>
+	</target>
+	<target name="createResourcesZip" if="resource.bisas.dir.exist">
+		<zip zipfile="${artifact.zipFile}" update="true" whenempty="create" >
+			<fileset dir="${resource.dir}/bisas">
+			</fileset>
+		</zip>
+	</target>
+	<target name="deleteArtifactZip">
+		<delete file="${artifact.zipFile}" />
+	</target>
+	<!-- Include forms in the artifact if they exist-->
+	<target name="zipForms" if="src.forms.dir.exist">
+		<zip zipfile="${artifact.zipFile}" update="true" whenempty="create">
+			<zipfileset dir="${src.forms.dir}" prefix="data/webdav/repository/conf/forms">
+				<include name="**/*.xml" />
+			</zipfileset>
+		</zip>
+	</target>
+	<!-- Include forms in the artifact if they exist-->
+	<target name="zipSchemas" if="src.schema.dir.exist">
+		<zip zipfile="${artifact.zipFile}" update="true" whenempty="create">
+			<zipfileset dir="${src.schema.dir}" prefix="software/libraries/TPMSchemas">
+				<include name="**/*.*" />
+			</zipfileset>
+		</zip>
+	</target>
+	<!-- Include translations in the artifacts if they exist -->
+	<target name="zipTranslations" if="src.nls-translations.dir.exist">
+		<zip zipfile="${artifact.zipFile}" update="true" whenempty="create">
+			<zipfileset dir="${src.nls-translations.dir}" prefix="conf/custom/translations">
+				<include name="**/*.*" />
+			</zipfileset>
+		</zip>
+	</target>
+	<!-- Include icons in the artifacts if they exist -->
+	<target name="zipIcons" if="src.nls-icons.dir.exist">
+		<zip zipfile="${artifact.zipFile}" update="true" whenempty="create">
+			<zipfileset dir="${src.nls-icons.dir}" prefix="conf/custom/icons">
+				<include name="**/*.*" />
+			</zipfileset>
+		</zip>
+	</target>
+	<!-- Include the source code in the zip -->
+	<target name="zipSource" unless="omit.source">
+		<zip destfile="antBuild/temp/mustafatestSource_${timestamp}.zip">
+			<zipfileset dir="${basedir}">
+				<include name="**/*.*" />
+				<exclude name="antBuild/" />
+				<exclude name="artifacts/" />
+				<exclude name="bpel/" />
+			</zipfileset>
+		</zip>
+		<zip zipfile="${artifact.zipFile}" update="true" whenempty="create">
+			<zipfileset dir="antBuild/temp/" prefix="software/libraries/src/process">
+				<include name="mustafatestSource_${timestamp}.zip" />
+			</zipfileset>
+		</zip>
+	</target>
+	<!-- Include filters in the artifact if they exist-->
+		<target name="zipFilters" if="src.filters.dir.exist">
+			<zip zipfile="${artifact.zipFile}" update="true" whenempty="create">
+				<zipfileset dir="${src.filters.dir}" prefix="data/webdav/repository/conf/filters">
+					<include name="**/*.xml" />
+				</zipfileset>
+			</zip>
+		</target>
+	<!-- Refresh the directory where the Artifact was created -->
+	<target name="refreshArtifactDir">
+		<eclipse.convertPath fileSystemPath="${artifact.target}" property="artifactWorkspaceDir" />
+		<eclipse.refreshLocal resource="${artifactWorkspaceDir}" depth="infinite" />
+	</target>
+	<target name="clean" description="cleans up the complete generated files">
+		<delete dir="${build.dir}" />
+		<delete dir="${artifact.target}" />
+	</target>
+	<!-- call the nightly build target to get the work done -->
+	<target name="distributionBuild" description="compiles all files and distributes them to a server with version before 6.3.4" depends="localBuild, copyZip">
+	</target>
+
+	<target name="distributeSolutionBuild" description="compiles all files and distributes them to a server with version 6.3.4 or higher" depends="localBuild, copySolutionZip">
+    </target>
+	
+	<!-- build BSH -->
+	<target name="createBSH">
+		<property name="src.bsh.dir" value="${src.dir}/bsh" />
+		<processDesigner.BshBuilder project="${project.name}" sourceDir="${src.bsh.dir}" targetDir="/antBuild/generated/bsh" />
+	</target>
+
+	<!-- build TPM -->
+	<target name="TPM-creation" description="creates the TPM out of the files in the workspace to use in ProcessDesigner">
+		<property name="tpm.path" value="/src/schemas/entities" />
+		<!-- execute the Schema Tasks -->
+		<processDesigner.SeeAntSchemaMerger rootElementName="Entities" sourceDirName="${tpm.path}" resultDirName="${build.temp}" resultSchemaName="TPM.xsd" targetNamespace="http://uri.seeburger.com/bisas/tpm/schema" />
+		<processDesigner.SeeAntWSDLGenerator schemaName="${build.temp}/TPM.xsd" targetDirName="${basedir}/src/wsdl" />
+		<!-- <eclipse.refreshLocal resource="${ant.project.name}" depth="infinite"/> -->
+	</target>
+
+	<target name="copyZip" description="unpacks the existing zip file to the server">
+		<ant antfile="build/distribute.xml" target="distribute" />
+	</target>
+	
+	<target name="copySolutionZip" description="copies the existing zip file to the server">
+	        <ant antfile="build/distribute.xml" target="distribute-zip" />
+	</target>
+	
+	<target name="createAndCopyBSH" depends="createBSH" description="Creates the bsh files and copies them to the server">
+		<ant antfile="build/distribute.xml" target="copy-BSH" />
+	</target>
+
+
+
+
+	<!-- create X-Forms artifact -->
+	<property name="xforms.dir" value="${src.dir}/xforms" />
+	<property name="ant.file" value="${basedir}/build/build.xml" />
+	<available property="xforms.dir.exist" file="${xforms.dir}" />
+	<target name="createXFormsZip" depends="prepare" description="creates zip containing the wsdl, the xsd schema and xml instance." if="xforms.dir.exist">
+		<processDesigner.InsertXFormName projectName="${project.name}"/>		
+		<subant genericantfile="${ant.file}" target="createZip">
+			<dirset dir="${xforms.dir}" includes="**/_xform_src_files_replaced" />
+		</subant>
+	</target>
+
+	<target name="createZip">
+		<tstamp>
+			<format property="TODAY" pattern="yyyy-MM-dd hh:mm:ss zzzz" locale="en" />
+		</tstamp>
+        	<property name="date" value="${DSTAMP}" />
+        	<property name="time" value="${TSTAMP}" />
+        	<property name="timestamp" value="${date}${time}" />
+		<property name="artifact.dir" value="../../../../artifacts" />
+		<basename file=".." property="xform.name" />
+		<zip destfile="${xform.name}_${timestamp}.zip" basedir="${basedir}" />
+		<move file="${xform.name}_${timestamp}.zip" failonerror="false" todir="${artifact.dir}" />
+		<delete dir="${basedir}" failonerror="false"/>
+		<eclipse.convertPath fileSystemPath=".." property="projectDir" />
+		<eclipse.refreshLocal resource="${projectDir}" depth="infinite" />
+	</target>
+
+	<target name="createXForms" depends="createXFormsZip, refreshArtifactDir" description="execute this for local build: Beanshell-Scripts, an artifact containing xforms, xml instances and schemas is created." />
+
+	<!-- ===================================================================
+         Help task
+             Here you include brief decsription of all the usefull targets
+             that could be invoked.
+         =================================================================== -->
+	<target name="Help" description="displays a short list of useable targets">
+		<echo message="*****************************************************" />
+		<echo message="*   ${ant.project.name} Build file                  *" />
+		<echo message="*                                                   *" />
+		<echo message="*   Available tasks:                                *" />
+		<echo message="*    - localBuild - target for creating artifact    *" />
+		<echo message="*                   from within eclipse or the      *" />
+		<echo message="*                   command line to deploy on       *" />
+		<echo message="*                   server                          *" />
+		<echo message="*                                                   *" />
+		<echo message="*    - distributionBuild - target for creating      *" />
+		<echo message="*                   artifact and deploying it to    *" />
+		<echo message="*                   a local server.                 *" />
+        <echo message="*                   NOTE: Use only for BIS servers  *" />
+        <echo message="*                         before 6.3.4!             *" />
+        <echo message="*                                                   *" />
+        <echo message="*    - distributeSolutionBuild - target for         *" />
+        <echo message="*                   creating artifact and deploying *" />
+        <echo message="*                   it to a local server without    *" />
+        <echo message="*                   unpacking it                    *" />
+        <echo message="*                   NOTE: Use only for BIS servers  *" />
+        <echo message="*                         since 6.3.4!              *" />
+        <echo message="*                                                   *" />
+		<echo message="*    - copyZip - copies the zip file that is        *" />
+		<echo message="*                created by localBuild to the       *" />
+		<echo message="*                server.                            *" />
+		<echo message="*                                                   *" />
+		<echo message="*    - TPM-creation - target for creating the TPM   *" />
+		<echo message="*                   out of the files in the         *" />
+		<echo message="*                   workspace to use in             *" />
+		<echo message="*                   ProcessDesigner                 *" />
+		<echo message="*                                                   *" />
+		<echo message="*    - createAndCopyBSH - creates the BSH files     *" />
+		<echo message="*                   from the java files and copies  *" />
+		<echo message="*                   them to the server              *" />
+		<echo message="*                                                   *" />
+		<echo message="*    - createXForms - replaces the placeholders     *" />
+		<echo message="*                   	 with the XForm name and zips  *" />
+		<echo message="*                   	 the XForm source files        *" />
+		<echo message="*                                                   *" />
+		<echo message="*   NOTE: The property ${bisas_home} must be set in *" />
+		<echo message="*    the ant runtime properties of eclipse before a *" />
+		<echo message="*    task is executed that copies files to the      *" />
+		<echo message="*    server.                                        *" />
+		<echo message="*                                                   *" />
+		<echo message="*   Remember:                                       *" />
+		<echo message="*    Targets without a description are not meant to *" />
+		<echo message="*    be executed stand alone!                       *" />
+		<echo message="*****************************************************" />
+	</target>
+</project>

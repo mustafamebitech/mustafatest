@@ -1,0 +1,12 @@
+#Fri Nov 07 17:24:24 EET 2008
+com.seeburger.bpm.designer/appearance/task/toolbox/BPMN\ Tasks\:FlowControl/com.seeburger.pd.tasks.BPMSubprocess=0
+com.seeburger.bpm.designer/appearance/task/toolbox/BPMN\ Tasks\:FlowControl/com.seeburger.pd.tasks.SubProcess=0
+com.seeburger.bpm.designer/appearance/task/toolbox/BPMN\ Tasks\:Gateways/com.seeburger.pd.tasks.IfSwitch=0
+com.seeburger.bpm.designer/appearance/task/toolbox/BPMN\ Tasks\:Web\ Service\ Interface=0
+com.seeburger.bpm.designer/appearance/task/toolbox/BPMN\ Tasks\:Web\ Service\ Interface/com.seeburger.pd.tasks.CustomReceive=0
+com.seeburger.bpm.designer/appearance/task/toolbox/BPMN\ Tasks\:Web\ Service\ Interface/com.seeburger.pd.tasks.CustomReceiveReply=0
+com.seeburger.bpm.designer/appearance/task/types/General=
+com.seeburger.bpm.designer/appearance/task/types/General/Human\ Interaction=BPMhumaninteraction.gif
+com.seeburger.bpm.designer/appearance/task/types/General/Receive=BPMreceive.gif
+com.seeburger.bpm.designer/appearance/task/types/General/Send=BPMsend.gif
+eclipse.preferences.version=1
