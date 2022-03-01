@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProcessDiagram lastUid="16" scriptVersion="4.0" caption="testprocess3" className="com.seeburger.wfd.bpmn2.impl.BPMNDocument" name="testprocess3" uid="0" visible="true" xmlns="wfd">
+    <Model className="com.seeburger.wfd.bpmn2.model.DocumentModel">
+        <PropertySets name="name">
+            <val>testprocess3</val>
+        </PropertySets>
+        <PropertySets name="documentType">
+            <val>Process</val>
+        </PropertySets>
+        <PropertySets name="Namespaces"/>
+    </Model>
+    <RecDefault/>
+    <container caption="" className="com.seeburger.wfd.bpmn2.impl.BPMNLayer" moveable="true" uid="1" visible="true">
+        <Model className="com.seeburger.wfd.bpmn2.model.ElementModel"/>
+        <RecDefault height="500" width="100"/>
+    </container>
+    <container caption="main" className="com.seeburger.wfd.bpmn2.impl.BPMNProcess" name="testprocess3" moveable="true" uid="2" visible="true">
+        <Model className="com.seeburger.wfd.bpmn2.model.ProcessModel">
+            <PropertySets name="name">
+                <val>testprocess3</val>
+            </PropertySets>
+        </Model>
+        <RecDefault height="500" width="200"/>
+        <container caption="" className="com.seeburger.wfd.bpmn2.impl.BPMNLayer" moveable="true" uid="3" visible="true">
+            <Model className="com.seeburger.wfd.bpmn2.model.ElementModel"/>
+            <RecDefault height="500" width="100"/>
+        </container>
+        <lane laneOrderNumber="0" caption="Lane1" className="com.seeburger.wfd.bpmn2.impl.BPMNLane" name="Lane1" uid="4" visible="true">
+            <Model className="com.seeburger.wfd.bpmn2.model.LaneModel">
+                <PropertySets name="text">
+                    <val>Process</val>
+                </PropertySets>
+                <PropertySets name="name">
+                    <val>Lane1</val>
+                </PropertySets>
+            </Model>
+            <RecDefault height="479" width="160"/>
+            <element caption="Start" className="com.seeburger.wfd.bpmn2.impl.BPMNStart" moveable="true" uid="6" visible="true">
+                <Dockings dockTyp="3" uid="7"/>
+                <Dockings dockTyp="4" uid="8"/>
+                <Dockings dockTyp="1" uid="9"/>
+                <Dockings dockTyp="2" uid="10"/>
+                <Model className="com.seeburger.wfd.bpmn2.model.StartModel"/>
+            </element>
+            <element caption="End" className="com.seeburger.wfd.bpmn2.impl.BPMNEnd" moveable="true" uid="11" visible="true">
+                <Dockings dockTyp="3" uid="12"/>
+                <Dockings dockTyp="4" uid="13"/>
+                <Dockings dockTyp="1" uid="14"/>
+                <Dockings dockTyp="2" uid="15"/>
+                <Model className="com.seeburger.wfd.bpmn2.model.EndModel"/>
+            </element>
+            <flow className="com.seeburger.wfd.bpmn2.impl.BPMNSequenceFlow" moveable="true" uid="16" visible="true">
+                <DockSource dockTyp="3" uid="7"/>
+                <DockSink dockTyp="1" uid="14"/>
+                <LinePoints/>
+                <LinePoints/>
+                <LinePoints/>
+                <LinePoints/>
+                <LinePoints/>
+                <LinePoints/>
+                <Model className="com.seeburger.wfd.bpmn2.model.SequenceFlowModel"/>
+            </flow>
+        </lane>
+        <lane laneOrderNumber="1" expanded="false" caption="Lane2" className="com.seeburger.wfd.bpmn2.impl.BPMNDataLane" name="Lane" uid="5" visible="true">
+            <Model className="com.seeburger.wfd.bpmn2.model.LaneModel">
+                <PropertySets name="text">
+                    <val>Data</val>
+                </PropertySets>
+                <PropertySets name="laneType">
+                    <val>Data</val>
+                </PropertySets>
+            </Model>
+            <RecDefault height="479" width="40"/>
+        </lane>
+    </container>
+    <Imports/>
+</ProcessDiagram>
+
