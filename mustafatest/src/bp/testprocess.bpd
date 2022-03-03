@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ProcessDiagram lastUid="16" scriptVersion="4.0" caption="testprocess" className="com.seeburger.wfd.bpmn2.impl.BPMNDocument" name="testprocess" uid="0" visible="true" xmlns="wfd">
+<ProcessDiagram scriptVersion="4.12" lastUid="40" name="testprocess" className="com.seeburger.wfd.bpmn2.impl.BPMNDocument" caption="testprocess" visible="true" uid="0" xmlns="wfd">
     <Model className="com.seeburger.wfd.bpmn2.model.DocumentModel">
         <PropertySets name="name">
             <val>testprocess</val>
@@ -7,50 +7,199 @@
         <PropertySets name="documentType">
             <val>Process</val>
         </PropertySets>
-        <PropertySets name="Namespaces"/>
+        <PropertySets name="Namespaces">
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://schemas.xmlsoap.org/wsdl/"/>
+                <valSet value="ns"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://uri.seeburger.com/dt/as2/schema"/>
+                <valSet value="as2"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://uri.seeburger.com/dt/master/wsdl"/>
+                <valSet value="masterwsdl"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://schemas.xmlsoap.org/wsdl/formatbinding/"/>
+                <valSet value="format"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://www.w3.org/2001/XMLSchema"/>
+                <valSet value="xsd"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://schemas.xmlsoap.org/ws/2003/05/partner-link/"/>
+                <valSet value="plnk"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://uri.seeburger.com/worklisthandler/definition"/>
+                <valSet value="wld"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://uri.seeburger.com/dt/master/schema"/>
+                <valSet value="master"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://uri.seeburger.com/dt/shc/schema/shcrequest"/>
+                <valSet value="shc"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://uri.seeburger.com/bisas/framework/wsdl"/>
+                <valSet value="fw"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://www.seeburger.de/wsdl/wlh/"/>
+                <valSet value="wh"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://schemas.xmlsoap.org/wsdl/java/"/>
+                <valSet value="java"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://www.seeburger.de/wsdl/si/"/>
+                <valSet value="si"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://uri.seeburger.com/dt/as2/wsdl"/>
+                <valSet value="ns1"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://uri.seeburger.com/base/wsdl/extension"/>
+                <valSet value="extbase"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://uri.seeburger.com/dt/http/schema"/>
+                <valSet value="http"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://schemas.xmlsoap.org/wsdl/ejb/"/>
+                <valSet value="ejb"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://uri.seeburger.com/bisas/processDesigner/doc"/>
+                <valSet value="pddoc"/>
+            </valObj>
+            <valObj className="com.seeburger.wfd.bpmn2.property.values.NamespaceObj">
+                <valSet value="http://schemas.xmlsoap.org/wsdl/soap/"/>
+                <valSet value="soap"/>
+            </valObj>
+        </PropertySets>
+        <PropertySets name="revision">
+            <val>$Revision$</val>
+        </PropertySets>
     </Model>
     <RecDefault/>
-    <container caption="" className="com.seeburger.wfd.bpmn2.impl.BPMNLayer" moveable="true" uid="1" visible="true">
+    <container className="com.seeburger.wfd.bpmn2.impl.BPMNLayer" caption="" visible="true" uid="1" moveable="true">
         <Model className="com.seeburger.wfd.bpmn2.model.ElementModel"/>
-        <RecDefault height="500" width="100"/>
+        <RecDefault width="100" height="500"/>
     </container>
-    <container caption="main" className="com.seeburger.wfd.bpmn2.impl.BPMNProcess" name="testprocess" moveable="true" uid="2" visible="true">
+    <container laneOrderNumber="-1" name="testprocess" className="com.seeburger.wfd.bpmn2.impl.BPMNProcess" caption="main" visible="true" uid="2" moveable="true">
         <Model className="com.seeburger.wfd.bpmn2.model.ProcessModel">
             <PropertySets name="name">
                 <val>testprocess</val>
             </PropertySets>
         </Model>
-        <RecDefault height="500" width="200"/>
-        <container caption="" className="com.seeburger.wfd.bpmn2.impl.BPMNLayer" moveable="true" uid="3" visible="true">
+        <RecDefault width="200" height="500"/>
+        <container className="com.seeburger.wfd.bpmn2.impl.BPMNLayer" caption="" visible="true" uid="3" moveable="true">
             <Model className="com.seeburger.wfd.bpmn2.model.ElementModel"/>
-            <RecDefault height="500" width="100"/>
+            <RecDefault width="100" height="500"/>
         </container>
-        <lane laneOrderNumber="0" caption="Lane1" className="com.seeburger.wfd.bpmn2.impl.BPMNLane" name="Lane1" uid="4" visible="true">
+        <lane laneOrderNumber="0" name="Lane1" className="com.seeburger.wfd.bpmn2.impl.BPMNLane" caption="Lane1" visible="true" uid="4">
             <Model className="com.seeburger.wfd.bpmn2.model.LaneModel">
                 <PropertySets name="text">
                     <val>Process</val>
                 </PropertySets>
+                <PropertySets name="documentationpath"/>
                 <PropertySets name="name">
                     <val>Lane1</val>
                 </PropertySets>
             </Model>
-            <RecDefault height="479" width="160"/>
-            <element caption="Start" className="com.seeburger.wfd.bpmn2.impl.BPMNStart" moveable="true" uid="6" visible="true">
+            <RecDefault width="160" height="479"/>
+            <element className="com.seeburger.wfd.bpmn2.impl.BPMNStart" caption="Start" visible="true" uid="6" moveable="true">
                 <Dockings dockTyp="3" uid="7"/>
                 <Dockings dockTyp="4" uid="8"/>
                 <Dockings dockTyp="1" uid="9"/>
                 <Dockings dockTyp="2" uid="10"/>
                 <Model className="com.seeburger.wfd.bpmn2.model.StartModel"/>
             </element>
-            <element caption="End" className="com.seeburger.wfd.bpmn2.impl.BPMNEnd" moveable="true" uid="11" visible="true">
+            <element className="com.seeburger.wfd.bpmn2.impl.BPMNEnd" caption="End" visible="true" uid="11" moveable="true">
                 <Dockings dockTyp="3" uid="12"/>
                 <Dockings dockTyp="4" uid="13"/>
                 <Dockings dockTyp="1" uid="14"/>
                 <Dockings dockTyp="2" uid="15"/>
                 <Model className="com.seeburger.wfd.bpmn2.model.EndModel"/>
             </element>
-            <flow className="com.seeburger.wfd.bpmn2.impl.BPMNSequenceFlow" moveable="true" uid="16" visible="true">
+            <element className="com.seeburger.wfd.bpmn2.impl.BPMNTask" caption="initiateMessage" visible="true" uid="17" moveable="true">
+                <Dockings dockTyp="3" uid="18"/>
+                <Dockings dockTyp="4" uid="19"/>
+                <Dockings dockTyp="1" uid="20"/>
+                <Dockings dockTyp="6" uid="21"/>
+                <Dockings dockTyp="7" uid="22"/>
+                <Dockings dockTyp="8" uid="23"/>
+                <Dockings dockTyp="9" uid="24"/>
+                <Dockings dockTyp="2" uid="25"/>
+                <Dockings dockTyp="12" uid="26"/>
+                <Dockings dockTyp="13" uid="27"/>
+                <Dockings dockTyp="10" uid="28"/>
+                <Dockings dockTyp="11" uid="29"/>
+                <Model>
+                    <PropertySets name="documentation">
+                        <val>Initiates a new received AS2 message to backend</val>
+                    </PropertySets>
+                    <PropertySets name="text">
+                        <val>initiateMessage</val>
+                    </PropertySets>
+                    <PropertySets name="name">
+                        <val>initiateMessage</val>
+                    </PropertySets>
+                    <PropertySets name="type">
+                        <val>Receive</val>
+                    </PropertySets>
+                    <PropertySets name="instantiate">
+                        <val>true</val>
+                    </PropertySets>
+                    <PropertySets name="outputVariable">
+                        <val>vrInitiateMsg</val>
+                    </PropertySets>
+                    <PropertySets name="tdlCategory">
+                        <val>Adapters:AS2 Controller</val>
+                    </PropertySets>
+                    <PropertySets name="tdlPartner">
+                        <val>testprocess</val>
+                    </PropertySets>
+                    <PropertySets name="tdlPorttype">
+                        <val>{http://uri.seeburger.com/dt/as2/wsdl}DtAS2Callback</val>
+                    </PropertySets>
+                    <PropertySets name="tdlOpertation">
+                        <val>initiateMessage</val>
+                    </PropertySets>
+                    <PropertySets name="tdlLink">
+                        <val>/imports/as2.wsdl</val>
+                    </PropertySets>
+                    <PropertySets name="tdlPrjLink">
+                        <val>file:imports</val>
+                    </PropertySets>
+                    <PropertySets name="inputMessage">
+                        <val>{http://uri.seeburger.com/dt/as2/wsdl}InitiateMsg</val>
+                    </PropertySets>
+                </Model>
+            </element>
+            <flow className="com.seeburger.wfd.bpmn2.impl.BPMNSequenceFlow" visible="true" uid="16" moveable="true">
                 <DockSource dockTyp="3" uid="7"/>
+                <DockSink dockTyp="1" uid="20"/>
+                <LinePoints/>
+                <LinePoints/>
+                <LinePoints/>
+                <LinePoints/>
+                <LinePoints/>
+                <LinePoints/>
+                <Model className="com.seeburger.wfd.bpmn2.model.SequenceFlowModel">
+                    <PropertySets name="conditionExpression"/>
+                </Model>
+            </flow>
+            <flow className="com.seeburger.wfd.bpmn2.impl.BPMNSequenceFlow" visible="true" uid="30" moveable="true">
+                <DockSource dockTyp="3" uid="18"/>
                 <DockSink dockTyp="1" uid="14"/>
                 <LinePoints/>
                 <LinePoints/>
@@ -58,21 +207,54 @@
                 <LinePoints/>
                 <LinePoints/>
                 <LinePoints/>
-                <Model className="com.seeburger.wfd.bpmn2.model.SequenceFlowModel"/>
+                <Model className="com.seeburger.wfd.bpmn2.model.SequenceFlowModel">
+                    <PropertySets name="name">
+                        <val>Seq</val>
+                    </PropertySets>
+                    <PropertySets name="conditionExpression"/>
+                </Model>
             </flow>
         </lane>
-        <lane laneOrderNumber="1" expanded="false" caption="Lane2" className="com.seeburger.wfd.bpmn2.impl.BPMNDataLane" name="Lane" uid="5" visible="true">
+        <lane laneOrderNumber="1" expanded="false" name="Lane" className="com.seeburger.wfd.bpmn2.impl.BPMNDataLane" caption="Lane2" visible="true" uid="5">
             <Model className="com.seeburger.wfd.bpmn2.model.LaneModel">
                 <PropertySets name="text">
                     <val>Data</val>
                 </PropertySets>
+                <PropertySets name="documentationpath"/>
                 <PropertySets name="laneType">
                     <val>Data</val>
                 </PropertySets>
             </Model>
-            <RecDefault height="479" width="40"/>
+            <RecDefault width="40" height="479"/>
+            <element className="com.seeburger.wfd.bpmn2.impl.BPMNDataObject" caption="vrInitiateMsg" visible="false" uid="31" moveable="true">
+                <Dockings dockTyp="6" uid="32"/>
+                <Dockings dockTyp="7" uid="33"/>
+                <Model className="com.seeburger.wfd.bpmn2.model.DataObjectModel">
+                    <PropertySets name="name">
+                        <val>vrInitiateMsg</val>
+                    </PropertySets>
+                    <PropertySets name="variableType">
+                        <val>{http://uri.seeburger.com/dt/as2/wsdl}InitiateMsg</val>
+                    </PropertySets>
+                    <PropertySets name="variableLink">
+                        <val/>
+                    </PropertySets>
+                    <PropertySets name="variableTypeQNameMeaning">
+                        <val>wsdl message</val>
+                    </PropertySets>
+                </Model>
+                <Attachments className="com.seeburger.wfd.bpmn2.impl.BPMNLabel" caption="vrInitiateMsg" visible="true" uid="34" moveable="true">
+                    <Model className="com.seeburger.wfd.bpmn2.model.ElementModel"/>
+                </Attachments>
+            </element>
         </lane>
     </container>
-    <Imports/>
+    <Imports>
+        <Import>
+            <type>wsdl</type>
+            <id>1816046755</id>
+            <path>as2.wsdl</path>
+            <locationVariable>$CurrentServerProject</locationVariable>
+        </Import>
+    </Imports>
 </ProcessDiagram>
-
